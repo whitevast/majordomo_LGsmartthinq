@@ -178,7 +178,9 @@ class LGAPI
                 } else {
                     $this->lglog($json_request);
                     $this->lglog($response);
-                    $this->lglog($result->$data_root->returnMsg);
+					if(isset($result->$data_root->returnMsg)){
+                        $this->lglog($result->$data_root->returnMsg);
+					}
                 }
                 $this->update_access_token();
                 $this->login();
@@ -445,7 +447,7 @@ class LGAPI
         }
         $result = Null;
 
-        if (!$this->oauth2_backend_url) {
+        if (!isset($this->oauth2_backend_url)) {
             $values = $this->parse_redirected_url($this->redirected_url);
             $this->oauth2_backend_url = urldecode($values['oauth2_backend_url']);
         }
@@ -483,8 +485,8 @@ class LGAPI
                 "\nParams: \"grant_type=refresh_token&refresh_token=$refresh_token\"\n" .
                 "\nresponse:\n" . $response);
         }
-        $result = $json->access_token;
-        if ( $result ) {
+        $result = isset($json->access_token) ? $json->access_token : false;
+        if ($result) {
             $this->set_api_property('access_token', $result);
         }
         $this->lglog($result);

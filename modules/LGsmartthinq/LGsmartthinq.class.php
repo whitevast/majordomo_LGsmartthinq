@@ -172,7 +172,7 @@ class LGsmartthinq extends module
             $this->saveConfig();
             $this->redirect("?");
         }
-        if (isset($this->data_source) && !$_GET['data_source'] && !$_POST['data_source']) {
+        if (isset($this->data_source) && !isset($_GET['data_source']) && !isset($_POST['data_source'])) {
             $out['SET_DATASOURCE'] = 1;
         }
         if ($this->data_source == 'lgsmarthinq_devices' || $this->data_source == '') {
@@ -186,9 +186,6 @@ class LGsmartthinq extends module
                 $this->delete_lgsmarthinq_devices($this->id);
                 $this->redirect("?data_source=lgsmarthinq_devices");
             }
-        }
-        if (isset($this->data_source) && !$_GET['data_source'] && !$_POST['data_source']) {
-            $out['SET_DATASOURCE'] = 1;
         }
         if ($this->data_source == 'lgsmarthinq_values') {
             if ($this->view_mode == '' || $this->view_mode == 'search_lgsmarthinq_values') {
